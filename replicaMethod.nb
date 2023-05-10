@@ -1,0 +1,173 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      5500,        163]
+NotebookOptionsPosition[      5140,        149]
+NotebookOutlinePosition[      5546,        165]
+CellTagsIndexPosition[      5503,        162]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "define", " ", "the", " ", "size", " ", "of", " ", "the", " ", "matrix", 
+    " ", "and", " ", "the", " ", "number", " ", "of", " ", "replicas"}], 
+   "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"n", "=", "4"}], ";", 
+    RowBox[{"\[ScriptCapitalN]", "=", "10"}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"define", " ", "the", " ", "potential", " ", "parameter"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"a", "=", "1"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"define", " ", "the", " ", "potential", " ", "function"}], "*)"}],
+    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"V", "[", 
+     RowBox[{"M_", ",", "a_"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "a"}], " ", 
+      RowBox[{
+       RowBox[{"Tr", "[", 
+        RowBox[{"M", ".", "M"}], "]"}], "/", 
+       RowBox[{"(", 
+        RowBox[{"2", "n"}], ")"}]}]}], "+", 
+     RowBox[{"Log", "[", 
+      RowBox[{"Det", "[", "M", "]"}], "]"}]}]}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"initialize", " ", "the", " ", "partition", " ", "function"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Z", "=", "0"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "loop", " ", "over", " ", "all", " ", "possible", " ", "configurations", 
+     " ", "of", " ", "the", " ", "matrices"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"Do", "[", 
+    RowBox[{"(*", 
+     RowBox[{
+     "define", " ", "a", " ", "random", " ", "n", " ", "by", " ", "n", " ", 
+      "matrix"}], "*)"}], 
+    RowBox[{
+     RowBox[{
+      RowBox[{"M", "=", 
+       RowBox[{"RandomReal", "[", 
+        RowBox[{
+         RowBox[{"NormalDistribution", "[", "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"n", ",", "n"}], "}"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+       "compute", " ", "the", " ", "contribution", " ", "to", " ", "the", " ",
+         "partition", " ", "function"}], "*)"}], 
+      RowBox[{"Z", "+=", 
+       RowBox[{"Exp", "[", 
+        RowBox[{
+         RowBox[{"-", "\[ScriptCapitalN]"}], "*", 
+         RowBox[{"V", "[", 
+          RowBox[{"M", ",", "a"}], "]"}]}], "]"}]}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", 
+       RowBox[{"\[ScriptCapitalN]", "^", "2"}]}], "}"}]}], "]"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Clear", "[", "\[ScriptCapitalN]", "]"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "take", " ", "the", " ", "average", " ", "of", " ", "the", " ", 
+     "partition", " ", "function"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Z", "/=", 
+     RowBox[{"\[ScriptCapitalN]", "^", "2"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "take", " ", "the", " ", "logarithm", " ", "and", " ", "perform", " ", 
+     "a", " ", "Taylor", " ", "expansion"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"LogZ", "=", 
+     RowBox[{"Series", "[", 
+      RowBox[{
+       RowBox[{"Log", "[", "Z", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"\[ScriptCapitalN]", ",", "0", ",", "1"}], "}"}]}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"compute", " ", "the", " ", "free", " ", "energy"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"FreeEnergy", "=", 
+     RowBox[{"Limit", "[", 
+      RowBox[{
+       RowBox[{"LogZ", "/", "\[ScriptCapitalN]"}], ",", 
+       RowBox[{"\[ScriptCapitalN]", "->", "Infinity"}]}], "]"}]}], ";"}], 
+   "\n", 
+   RowBox[{"Clear", "[", "a", "]"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"compute", " ", "the", " ", "mean", " ", "eigenvalue"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"m", "=", 
+     RowBox[{"-", 
+      RowBox[{"D", "[", 
+       RowBox[{"FreeEnergy", ",", "a"}], "]"}]}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "compute", " ", "the", " ", "variance", " ", "of", " ", "the", " ", 
+     "eigenvalues"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"sigma2", "=", 
+     RowBox[{
+      RowBox[{"-", 
+       RowBox[{"D", "[", 
+        RowBox[{"FreeEnergy", ",", 
+         RowBox[{"{", 
+          RowBox[{"a", ",", "2"}], "}"}]}], "]"}]}], "/", "n"}]}], ";"}], 
+   "\n", "Z"}]}]], "Input",
+ CellChangeTimes->{{3.8926831693762097`*^9, 3.8926832287649055`*^9}, {
+  3.8926834209185896`*^9, 3.8926835089861345`*^9}},
+ CellLabel->
+  "In[144]:=",ExpressionUUID->"cd215143-6076-4604-9b25-c9cc3be2cbf7"]
+},
+WindowSize->{960, 478},
+WindowMargins->{{-5.5, Automatic}, {Automatic, -5.5}},
+FrontEndVersion->"13.2 for Microsoft Windows (64-bit) (November 18, 2022)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"0a02bc21-49bb-4a22-bee5-b3a14780ed24"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 4578, 127, 581, "Input",ExpressionUUID->"cd215143-6076-4604-9b25-c9cc3be2cbf7"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
